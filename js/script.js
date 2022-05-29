@@ -37,12 +37,29 @@ class Star {
     }
 }
 
-const star = new Star(canvas.width / 2, canvas.height / 2, 10, 10, "#1f1");
+const star1 = new Star(canvas.width / 2, canvas.height / 2, 10, 10, "#1f1");
 
 // recursive function for render the animation
 const animate = () => {
-    star.draw();
+    stars.forEach((star) => {
+        star.draw();
+    });
     requestAnimationFrame(animate);
 };
 
+const init = () => {
+    for (let index = 0; index < 50; index++) {
+        stars.push(
+            new Star(
+                getRandomFloat(0, canvas.width),
+                getRandomFloat(0, canvas.height),
+                10,
+                getRandomInt(2, 6),
+                "#000"
+            )
+        );
+    }
+};
+
+init();
 animate();
