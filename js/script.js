@@ -41,15 +41,14 @@ class Star {
     }
     update() {
         // Project star only viewport
-        this.z = this.z - 1;
+        this.z /= 2;
         if (this.z < 1) {
             newX = this.x;
             newY = this.y;
-            this.z = 500;
+            this.z = 100;
         } else {
-            newX = (this.x * 100) / this.z;
-            newY = (this.y * 100) / this.z;
-            newZ = 0.0001 * (2000 - this.z);
+            newX = this.x / this.z;
+            newY = this.y / this.z;
         }
         ctx.beginPath();
         ctx.arc(newX, newY, this.radius, 0, 2 * Math.PI, false);
