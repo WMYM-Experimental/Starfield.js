@@ -6,10 +6,12 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 ctx.translate(canvas.width / 2, canvas.height / 2); // make a new Origin reference
-ctx.moveTo(canvas.width / 2, canvas.height / 2); // move to new Origin
+ctx.moveTo(0, 0); // move to new Origin
 
 // stars for the starfield
 const stars = [];
+let newX;
+let newY;
 
 //functions
 const getRandomInt = (min, max) => {
@@ -27,7 +29,7 @@ class Star {
     constructor(x, y, radius, color) {
         this.x = x;
         this.y = y;
-        this.z = 1800; // just the iluttion of 3D (2d project) from x to a new value
+        this.z = 100; // just the iluttion of 3D (2d project) from x to a new value
         this.radius = radius;
         this.color = color;
     }
@@ -38,12 +40,17 @@ class Star {
         ctx.fill();
     }
     update() {
+        // Project star only viewport
         this.z = this.z - 1;
-        if (this.z <= 0) {
-            this.z = 1800;
+        if (this.z < 1) {
+            newX = this.x;
+            newY = this.y;
+            this.z = 500;
+        } else {
+            newX = (this.x * 100) / this.z;
+            newY = (this.y * 100) / this.z;
+            newZ = 0.0001 * (2000 - this.z);
         }
-        let newX = this.x / this.z;
-        let newY = this.y / this.z;
         ctx.beginPath();
         ctx.arc(newX, newY, this.radius, 0, 2 * Math.PI, false);
         ctx.fillStyle = this.color;
@@ -58,7 +65,7 @@ const init = () => {
                 getRandomFloat(-canvas.width, canvas.width),
                 getRandomFloat(-canvas.height, canvas.height),
                 getRandomInt(2, 6),
-                "#000"
+                "#fff"
             )
         );
     }
@@ -67,6 +74,12 @@ const init = () => {
 // recursive function for render the animation
 const animate = () => {
     requestAnimationFrame(animate);
+    ctx.clearRect(
+        -canvas.width,
+        -canvas.height,
+        canvas.width * 2,
+        canvas.height * 2
+    );
     stars.forEach((star) => {
         star.update();
     });
