@@ -124,7 +124,7 @@ const animate = () => {
 };
 
 window.addEventListener("resize", () => {
-    stars = [];
+    stars.splice(0, stars.length);;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     ctx.translate(canvas.width / 2, canvas.height / 2); // make a new Origin reference
