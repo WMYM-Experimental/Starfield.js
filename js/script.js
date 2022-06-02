@@ -28,8 +28,8 @@ const colorArray = [
 ];
 
 const stars = [];
-let newX;
-let newY;
+let newX = 0;
+let newY = 0;
 
 //functions
 const getRandomInt = (min, max) => {
@@ -64,6 +64,7 @@ class Star {
         ctx.closePath();
     }
     update() {
+        // this method makes the effect works
         // Project star only viewport
         this.z -= 2;
         if (this.z < 1) {
@@ -123,8 +124,11 @@ const animate = () => {
 };
 
 window.addEventListener("resize", () => {
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
+    stars.splice(0, stars.length);;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx.translate(canvas.width / 2, canvas.height / 2); // make a new Origin reference
+    ctx.moveTo(0, 0); // move to new Origin
     init();
   });
 
